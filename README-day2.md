@@ -39,6 +39,22 @@ See [deployment-plan.md](deployment-plan.md) for exact per-service Render settin
 - `80fe0b5035445f28acb2ed262f4d9cffa580d029`: document the integration and proxy fix commit IDs.
 - `efdb2986116444cfd10d81fcb692f56a4012e37a`: add GitHub Actions workflow `.github/workflows/day2-verify.yml` for Flask syntax/dependency installation and Next production build.
 
+## Sentry privacy filtering (optional grading item)
+
+Both `general/observability.py` and `monitor/backend/observability.py` contain the same `_scrub(event, hint)` callback and register it using `before_send=_scrub` inside `init_observability()`.
+
+| Setting / code | Purpose |
+|---|---|
+| `request.pop("data", None)` | Removes the captured HTTP request body (which could contain form fields or passwords). |
+| `request.pop("cookies", None)` | Removes collected cookies, including session identifiers. |
+| `request.pop("headers", None)` | Removes HTTP headers, including authorization and CSRF values if captured. |
+| `request.pop("env", None)` | Removes request environment/context values that could expose internal details. |
+| `event.pop("user", None)` | Removes the Sentry event's user identity data. |
+| `send_default_pii=False` | Disables automatic collection of personally identifiable information where supported by the SDK. |
+| `before_send=_scrub` | Applies the exclusions to each event before it is sent to Sentry. |
+
+These protections apply to the named event fields; they do not prove that all possible personal data is absent from exception messages or custom extras. Do not record secrets in such fields.
+
 ## Verification and submission
 
 After editing, commit and push, verify the deployed commit and recheck the same features. See `deployment-plan.md` for the required order, including disabling the Sentry practice route again. Sentry “Resolve” alone does not change the code or redeploy it.
