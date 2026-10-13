@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
 async function proxy(request, { params }) {
-  const base = process.env.MONITOR_API_URL?.replace(/\\/$/, "");
-  if (!base || !/^https?:\\/\\//.test(base)) {
+  const base = process.env.MONITOR_API_URL?.replace(/\/+$/, "");
+  if (!base || !(base.startsWith("https://") || base.startsWith("http://"))) {
     return NextResponse.json({ error: "감시 API 주소가 설정되지 않았습니다." }, { status: 503 });
   }
   const { path } = await params;
