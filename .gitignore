@@ -6,3 +6,9 @@ __pycache__/
 node_modules/
 dist/
 .DS_Store
+
+**/.env
+**/.env.local
+**/.env.production
+**/.next/
+**/__pycache__/
