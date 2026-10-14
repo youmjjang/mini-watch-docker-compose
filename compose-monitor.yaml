@@ -31,6 +31,8 @@ services:
     depends_on:
       monitor-db:
         condition: service_healthy
+    volumes:
+    - ./monitor/backend/learning/data:/app/learning/data:ro
     networks:
     - monitor-front-net
     - monitor-data-net
