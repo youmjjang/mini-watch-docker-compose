@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { requestJson } from "../api/client";
 import NotesClient from "./NotesClient";
+import AnalysisClient from "./AnalysisClient";
 
 export default function MonitorClient() {
   const [user, setUser] = useState(null);
@@ -62,6 +63,8 @@ export default function MonitorClient() {
               <tbody>{events.map(item => <tr key={item.id}><td>{item.event_type}</td><td>{item.method}</td><td>{item.path}</td><td>{item.status_code}</td></tr>)}</tbody>
             </table>
           </div>
+          <h2>실제 HTTP 요청 분석</h2>
+          <AnalysisClient />
           <h2>관찰 메모</h2>
           <NotesClient />
         </>
