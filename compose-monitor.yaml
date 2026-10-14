@@ -27,6 +27,7 @@ services:
       DB_USER: sample
       DB_PASSWORD: sample-only-pass
       SECRET_KEY: sample-monitor-session-key-not-for-production
+      EVENT_TOKEN: ${EVENT_TOKEN:?Set EVENT_TOKEN for both Compose projects}
     depends_on:
       monitor-db:
         condition: service_healthy
@@ -36,6 +37,8 @@ services:
     - events-net
   monitor-web:
     build: ./monitor/next-frontend
+    environment:
+      MONITOR_API_URL: http://monitor-api:5000
     networks:
     - monitor-front-net
   monitor-gateway:
