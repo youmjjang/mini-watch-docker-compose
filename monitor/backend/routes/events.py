@@ -32,7 +32,7 @@ def get_events():
     if error:
         return error
     event_type = request.args.get("event_type")
-    allowed = {"login_success", "login_failure", "http_request"}
+    allowed = {"login_success", "login_failure", "http_request", "post_list", "request_error"}
     if event_type is not None and event_type not in allowed:
         return {"error": "지원하지 않는 이벤트 종류입니다."}, 400
     return {"events": event_repository.list_events(event_type)}
