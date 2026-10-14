@@ -12,3 +12,9 @@ dist/
 **/.env.production
 **/.next/
 **/__pycache__/
+
+# Day3 generated observations / captures
+monitor/backend/learning/data/*.json
+monitor/backend/learning/data/*-next.json
+*.pcap
+*.pcapng
